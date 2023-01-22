@@ -135,9 +135,9 @@ endif
 
 ifneq ($(USE_LAWNCHAIR), true)
 -include vendor/shirayuki/prebuilt/Lawnchair/lawnchair.mk
+endif
 ifneq ($(USE_LAWNCHAIR),)
 $(warning "USE_LAWNCHAIR is undefined, using stock AOSP Launcher")
-endif
 endif
 
 # Inherit common product build prop overrides
