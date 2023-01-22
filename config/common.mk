@@ -1,4 +1,4 @@
-#shirayuki OS
+# ShirayukiProject Common Config
 #
 # Inherit art options
 include vendor/shirayuki/config/art.mk
@@ -116,9 +116,9 @@ include vendor/shirayuki/config/packages.mk
 # Plugins
 #include packages/apps/Plugins/plugins.mk
 
-#ifneq ($(TARGET_WANTS_AOSP_LAUNCHER), true)
-#-include vendor/shirayuki/prebuilt/Lawnchair/lawnchair.mk
-#endif
+ifneq ($(USE_LAWNCHAIR), true)
+-include vendor/shirayuki/prebuilt/Lawnchair/lawnchair.mk
+endif
 
 # Inherit common product build prop overrides
 -include vendor/shirayuki/config/versions.mk
