@@ -138,6 +138,7 @@ ifneq ($(USE_LAWNCHAIR), true)
 ifneq ($(USE_LAWNCHAIR),)
 $(warning "USE_LAWNCHAIR is undefined, using stock AOSP Launcher")
 endif
+endif
 
 # Inherit common product build prop overrides
 -include vendor/shirayuki/config/versions.mk
