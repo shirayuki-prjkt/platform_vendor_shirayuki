@@ -113,11 +113,30 @@ PRODUCT_COPY_FILES += \
 
 include vendor/shirayuki/config/packages.mk
 
+ifeq ($(TARGET_GAPPS_ARCH),arm)
+     -include vendor/yuki/gapps/arm/arm-vendor.mk
+     $(warning "Using arm GApps Variant")
+else ifeq ($(TARGET_GAPPS_ARCH),arm64)
+     -include vendor/yuki/gapps/arm64/arm64-vendor.mk
+     $(warning "Using arm64 GApps Variant")
+else ifeq ($(TARGET_GAPPS_ARCH),x86)
+     -include vendor/yuki/gapps/x86/x86-vendor.mk
+     $(warning "Using x86 GApps Variant")
+else ifeq ($(TARGET_GAPPS_ARCH),x86_64)
+     -include vendor/yuki/gapps/x86_64/x86_64-vendor.mk
+     $(warning "Using x86_64 GApps Variant")
+else
+    ifeq ($(TARGET_GAPPS_ARCH),)
+        $(warning "TARGET_GAPPS_ARCH is undefined, assuming vanilla variant")
+endif
+
 # Plugins
 #include packages/apps/Plugins/plugins.mk
 
 ifneq ($(USE_LAWNCHAIR), true)
 -include vendor/shirayuki/prebuilt/Lawnchair/lawnchair.mk
+ifneq ($(USE_LAWNCHAIR),)
+$(warning "USE_LAWNCHAIR is undefined, using stock AOSP Launcher")
 endif
 
 # Inherit common product build prop overrides
