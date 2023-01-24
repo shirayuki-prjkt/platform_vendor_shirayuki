@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+** Copyright 2013, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<!-- These resources are around just to allow their values to be customized
+     for different hardware and product builds. -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Should "4G" be shown instead of "LTE" when the network is NETWORK_TYPE_LTE? -->
+    <bool name="config_show4GForLTE">false</bool>
+
+    <!-- Control whether status bar should distinguish HSPA data icon form UMTS
+    data icon on devices -->
+    <bool name="config_hspa_data_distinguishable">true</bool>
+
+    <!-- let people decide if they want keyguard shortcuts or not -->
+    <bool name="config_keyguardShowLeftAffordance">false</bool>
+    <bool name="config_keyguardShowCameraAffordance">false</bool>
+    <!-- Whether to show activity indicators in the status bar -->
+    <bool name="config_showActivity">false</bool>
+
+    <!-- Enable the screenshot dismiss button by default -->
+    <bool name="always_show_screenshot_dismiss_button">true</bool>
+
+    <!-- The maximum number of tiles in the QuickQSPanel -->
+    <integer name="quick_qs_panel_max_tiles">2</integer>
+
+    <!-- Charging ripple -->
+    <bool name="flag_charging_ripple">true</bool>
+
+    <!-- Notifications are sized to match the width of two (of 4) qs tiles in landscape. -->
+    <bool name="config_skinnyNotifsInLandscape">false</bool>
+
+    <!-- Icons that don't show in a collapsed non-keyguard statusbar -->
+    <string-array name="config_collapsed_statusbar_icon_blocklist" translatable="false">
+        <item>@*android:string/status_bar_volume</item>
+        <item>@*android:string/status_bar_call_strength</item>
+    </string-array>
+
+    <!-- not used at the moment - both places use the same config above -->
+    <!-- Icons that don't show in a collapsed statusbar on keyguard -->
+    <string-array name="config_keyguard_statusbar_icon_blocklist" translatable="false">
+        <item>@*android:string/status_bar_volume</item>
+        <item>@*android:string/status_bar_call_strength</item>
+    </string-array>
+</resources>

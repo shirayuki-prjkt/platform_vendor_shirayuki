@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string-array name="config_locationProviderPackageNames" translatable="false">
+        <!-- qcom provider -->
+        <item>com.qualcomm.location</item>
+        <!-- The Google provider -->
+        <item>com.google.android.gms</item>
+        <!-- The standard AOSP fused location provider -->
+        <item>com.android.location.fused</item>
+    </string-array>
+
+    <string-array name="config_locationExtraPackageNames" translatable="false">
+        <!-- DejaVuLocationService -->
+        <item>org.fitchfamily.android.dejavu</item>
+        <!-- MozillaNlpBackend -->
+        <item>org.microg.nlp.backend.ichnaea</item>
+    </string-array>
+
+    <bool name="config_cellBroadcastAppLinks">true</bool>
+
+    <!-- Control whether Night display is available. This should only be enabled on devices
+         with HWC 2.0 or higher. -->
+    <bool name="config_nightDisplayAvailable">true</bool>
+
+    <!-- Override the default detection behavior for the framework method
+    android.view.ViewConfiguration#hasPermanentMenuKey().
+    Valid settings are:
+    0 - No change. Use the default autodetection behavior.
+    1 - The device DOES have a permanent menu key; ignore autodetection.
+    2 - The device DOES NOT have a permanent menu key; ignore autodetection. -->
+    <integer name="config_overrideHasPermanentMenuKey">2</integer>
+
+    <bool name="config_enableAutoPowerModes">true</bool>
+
+    <!-- Default list of files pinned by the Pinner Service -->
+    <string-array name="config_defaultPinnerServiceFiles">
+        <item>/system/lib64/libRScpp.so</item>
+        <item>/system/lib64/libRS.so</item>
+        <item>/system/lib64/libRS_internal.so</item>
+        <item>/system/lib64/libbcinfo.so</item>
+        <item>/system/lib64/libRSDriver.so</item>
+        <item>/system/lib64/libRSCpuRef.so</item>
+        <item>/system/lib64/libblas.so</item>
+        <item>/system_ext/priv-app/SystemUI/SystemUI.apk</item>
+    </string-array>
+
+    <bool name="config_dozeAlwaysOnDisplayEnabledDefault">false</bool>
+
+    <!-- Whether or not swipe up gesture's opt-in setting is available on this device -->
+    <bool name="config_swipe_up_gesture_setting_available">true</bool>
+
+    <bool name="config_smart_battery_available">true</bool>
+
+    <!-- Round UI stuff -->
+    <!-- default window inset isRound property -->
+    <bool name="config_windowIsRound">true</bool>
+
+    <!-- The duration in which a recent task is considered in session and should be visible. -->
+    <integer name="config_activeTaskDurationHours">24</integer>
+
+    <!-- Indicates that connected MAC randomization is supported on this device -->
+    <bool translatable="false" name="config_wifi_connected_mac_randomization_supported">true</bool>
+
+    <string-array translatable="false" name="config_globalActionsList">
+        <item>emergency</item>
+        <item>lockdown</item>
+        <item>power</item>
+        <item>restart</item>
+        <item>logout</item>
+        <item>screenshot</item>
+    </string-array>
+
+    <!--  Define optional package verifier name -->
+    <string name="config_optionalPackageVerifierName" translatable="false">seemp.service</string>
+
+    <!-- Control the behavior when the user long presses the power button.
+            0 - Nothing
+            1 - Global actions menu
+            2 - Power off (with confirmation)
+            3 - Power off (without confirmation)
+            4 - Go to voice assist
+            5 - Go to assistant (Settings.Secure.ASSISTANT)
+    -->
+    <integer name="config_longPressOnPowerBehavior">1</integer>
+
+    <!-- Whether this device is supporting the microphone toggle -->
+    <bool name="config_supportsMicToggle">true</bool>
+
+    <!-- Whether this device is supporting the camera toggle -->
+    <bool name="config_supportsCamToggle">true</bool>
+
+    <bool name="config_buttonTextAllCaps">false</bool>
+
+    <string name="config_clockFontFamily">google-sans-clock</string>
+
+    <!-- Flag indicating which package name can access DeviceConfig table -->
+    <string name="config_deviceConfiguratorPackageName" translatable="false">org.protonaosp.deviceconfig</string>
+
+</resources>

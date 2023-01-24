@@ -1,0 +1,28 @@
+PRODUCT_COPY_FILES += \
+    vendor/shirayuki/utils/shirayuki_emulator/fstab.ranchu.initrd:$(TARGET_COPY_OUT_RAMDISK)/fstab.ranchu \
+    vendor/shirayuki/utils/shirayuki_emulator/fstab.ranchu:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.ranchu \
+    vendor/shirayuki/prebuilt/etc/apns-conf.xml:system/etc/apns-conf.xml
+
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+PRODUCT_BUILD_VENDOR_BOOT_IMAGE := false
+PRODUCT_QUOTA_PROJID := 1
+PRODUCT_PROPERTY_OVERRIDES += external_storage.projid.enabled=1
+PRODUCT_PROPERTY_OVERRIDES += external_storage.sdcardfs.enabled=0
+
+$(call inherit-product, $(SRC_TARGET_DIR)/product/sdk_x86.mk)
+
+$(call inherit-product, vendor/shirayuki/config/gsm.mk)
+
+$(call inherit-product, vendor/shirayuki/utils/shirayuki_emulator/common.mk)
+
+QEMU_USE_SYSTEM_EXT_PARTITIONS := false
+
+# Override product naming for shirayuki
+PRODUCT_NAME := shirayuki_emulator
+PRODUCT_MANUFACTURER := ShirayukiProject
+PRODUCT_DEVICE := shirayuki_emulator
+
+DEVICE_PACKAGE_OVERLAYS += vendor/shirayuki/utils/shirayuki_emulator/overlay
+
+ALLOW_MISSING_DEPENDENCIES := true 
+PRODUCT_ENFORCE_RRO_TARGETS := framework-res
