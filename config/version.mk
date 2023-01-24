@@ -9,7 +9,7 @@ ifndef ROM_BUILDTIME_WITH_TIME
 endif
 
 TARGET_PRODUCT_SHORT := $(TARGET_PRODUCT)
-TARGET_PRODUCT_SHORT := $(subst omni_,,$(TARGET_PRODUCT_SHORT))
+TARGET_PRODUCT_SHORT := $(subst shirayuki_,,$(TARGET_PRODUCT_SHORT))
 
 # Build the final version string
 ifeq ($(ROM_BUILDTYPE),GAPPS)
