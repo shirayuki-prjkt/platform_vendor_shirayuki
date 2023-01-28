@@ -1,20 +1,29 @@
 PRODUCT_BRAND ?= shirayuki
 
-# use specific resolution for bootanimation
-ifneq ($(TARGET_BOOTANIMATION_SIZE),)
-PRODUCT_COPY_FILES += \
-    vendor/shirayuki/prebuilt/bootanimation/res/$(TARGET_BOOTANIMATION_SIZE).zip:$(TARGET_COPY_OUT_SYSTEM)/media/bootanimation.zip
-else
-PRODUCT_COPY_FILES += \
-    vendor/shirayuki/prebuilt/bootanimation/bootanimation.zip:$(TARGET_COPY_OUT_SYSTEM)/media/bootanimation.zip
-endif
-
 ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.com.google.clientidbase=android-google
 else
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.com.google.clientidbase=$(PRODUCT_GMS_CLIENTID_BASE)
+endif
+
+# Yuki GApps
+ifeq ($(TARGET_GAPPS_ARCH),arm)
+     -include vendor/yuki/gapps/arm/arm-vendor.mk
+     $(warning "Using arm GApps Variant")
+else ifeq ($(TARGET_GAPPS_ARCH),arm64)
+     -include vendor/yuki/gapps/arm64/arm64-vendor.mk
+     $(warning "Using arm64 GApps Variant")
+else ifeq ($(TARGET_GAPPS_ARCH),x86)
+     -include vendor/yuki/gapps/x86/x86-vendor.mk
+     $(warning "Using x86 GApps Variant")
+else ifeq ($(TARGET_GAPPS_ARCH),x86_64)
+     -include vendor/yuki/gapps/x86_64/x86_64-vendor.mk
+     $(warning "Using x86_64 GApps Variant")
+else
+    ifeq ($(TARGET_GAPPS_ARCH),)
+        $(warning "TARGET_GAPPS_ARCH is undefined, assuming vanilla variant")
 endif
 
 # Disable vendor restrictions
@@ -109,12 +118,81 @@ PRODUCT_COPY_FILES += \
 #PRODUCT_COPY_FILES += \
     vendor/shirayuki/prebuilt/etc/mkshrc:$(TARGET_COPY_OUT_SYSTEM)/etc/mkshrc
 
+# We modify several neverallows, so let the build proceed
+ifneq ($(TARGET_BUILD_VARIANT),eng)
+SELINUX_IGNORE_NEVERALLOWS := true
+endif
+
+ifeq ($(TARGET_SUPPORTS_64_BIT_APPS), true)
+# Don't preopt prebuilts
+DONT_DEXPREOPT_PREBUILTS := true
+
+# Use 64-bit dex2oat for better dexopt time.
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dex2oat64.enabled=true
+endif
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    pm.dexopt.boot=verify \
+    pm.dexopt.first-boot=verify \
+    pm.dexopt.install=speed-profile \
+    pm.dexopt.bg-dexopt=everything
+
+ifneq ($(AB_OTA_PARTITIONS),)
+PRODUCT_PROPERTY_OVERRIDES += \
+    pm.dexopt.ab-ota=verify
+endif
+
+#ADB
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.adb.secure=0 \
+    ro.secure=0 \
+    persist.service.adb.enable=1
+
+# Do not include art debug targets
+PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
+
+# Dedupe VNDK libraries with identical core variants
+TARGET_VNDK_USE_CORE_VARIANT := true
+
+# Use a generic profile based boot image by default
+PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE := true
+PRODUCT_DEX_PREOPT_BOOT_IMAGE_PROFILE_LOCATION := art/build/boot/boot-image-profile.txt
+
+# Strip the local variable table and the local variable type table to reduce
+# the size of the system image. This has no bearing on stack traces, but will
+# leave less information available via JDWP.
+PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
+
+# Enable whole-program R8 Java optimizations for SystemUI and system_server,
+# but also allow explicit overriding for testing and development.
+SYSTEM_OPTIMIZE_JAVA ?= true
+SYSTEMUI_OPTIMIZE_JAVA ?= true
+
+# Don't compile SystemUITests
+EXCLUDE_SYSTEMUI_TESTS := true
+
+# IORap app launch prefetching using Perfetto traces and madvise
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.iorapd.enable=true
+
+PRODUCT_SYSTEM_PROPERTIES += \
+    persist.device_config.runtime_native_boot.iorap_perfetto_enable=true
+
+# Disable touch video heatmap to reduce latency, motion jitter, and CPU usage
+# on supported devices with Deep Press input classifier HALs and models
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.input.video_enabled=false
+
 # whitelist packages for location providers not in $(TARGET_COPY_OUT_SYSTEM)
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.services.whitelist.packagelist=com.google.android.gms
 
 PRODUCT_COPY_FILES += \
     vendor/shirayuki/prebuilt/etc/fonts_customization.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/fonts_customization.xml
+
+# Bootanimation
+$(call inherit-product, vendor/shirayuki/config/bootanimation.mk)
 
 # Additional packages
 -include vendor/shirayuki/config/packages.mk
@@ -129,7 +207,7 @@ PRODUCT_PACKAGES += \
     QuickAccessWallet
 endif
 
-# Versioning
+# Inherit common product build prop overrides
 -include vendor/shirayuki/config/version.mk
 
 # Add our overlays

@@ -1,7 +1,7 @@
 # Versioning of the ROM
 
 ifndef ROM_BUILDTYPE
-    ROM_BUILDTYPE := HOMEMADE
+    ROM_BUILDTYPE := COMMUNITY
 endif
 
 ifndef ROM_BUILDTIME_WITH_TIME
@@ -11,17 +11,6 @@ endif
 TARGET_PRODUCT_SHORT := $(TARGET_PRODUCT)
 TARGET_PRODUCT_SHORT := $(subst shirayuki_,,$(TARGET_PRODUCT_SHORT))
 
-# Build the final version string
-ifeq ($(ROM_BUILDTYPE),GAPPS)
-include vendor/gapps/config.mk
-    VENDOR_EXCEPTION_PATHS += \
-    gapps
-endif
-ifeq ($(ROM_BUILDTYPE),MICROG)
-include vendor/microg/microg.mk
-    VENDOR_EXCEPTION_PATHS += \
-    microg
-endif
 ifeq ($(ROM_BUILDTIME_UTC),y)
     ifeq ($(ROM_BUILDTIME_WITH_TIME),y)
         ROM_VERSION := $(PLATFORM_VERSION)-$(shell date -u +%Y%m%d%H%M)-$(TARGET_PRODUCT_SHORT)-$(ROM_BUILDTYPE)
