@@ -54,6 +54,22 @@ endif
 PRODUCT_PACKAGES += \
     SimpleDeviceConfig
 
+# Cutout control overlay
+PRODUCT_PACKAGES += \
+    NoCutoutOverlay
+
+PRODUCT_PACKAGES += \
+    GameSpace
+
+ifeq ($(EXTRA_UDFPS_ANIMATIONS),true)
+PRODUCT_PACKAGES += \
+    UdfpsResources
+endif
+
+# Repainter integration
+PRODUCT_PACKAGES += \
+    RepainterServicePriv \
+
 # Telephony extension
 #PRODUCT_PACKAGES += telephony-ext
 #PRODUCT_BOOT_JARS += telephony-ext
