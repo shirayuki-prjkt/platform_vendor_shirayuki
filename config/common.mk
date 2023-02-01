@@ -2,6 +2,7 @@
 #
 # Inherit art options
 include vendor/shirayuki/config/art.mk
+include vendor/shirayuki/config/maintainer.mk
 
 # ART
 # Optimize everything for preopt
