@@ -209,6 +209,7 @@ endif
 
 # Inherit common product build prop overrides
 -include vendor/shirayuki/config/version.mk
+-include vendor/shirayuki/config/maintainer.mk
 
 # Add our overlays
 DEVICE_PACKAGE_OVERLAYS += vendor/shirayuki/overlay/common
