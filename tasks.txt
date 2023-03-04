@@ -1,0 +1,37 @@
+build/core/config.mk:include $(TOPDIR)vendor/syberia/build/core/qcom_target.mk
+build/core/definitions.mk:include vendor/syberia/build/core/utils.mk
+build/core/definitions.mk:include vendor/syberia/build/core/vendor/*.mk
+build/tasks/bacon.mk:.PHONY: bacon syberia
+build/tasks/bacon.mk:bacon: syberia
+build/tasks/bacon.mk:syberia: $(INTERNAL_OTA_PACKAGE_TARGET)
+build/tasks/kernel.mk:	$(hide) ./vendor/syberia/tools/changelog
+build/tools/50-syberia.sh:# /system/addon.d/50-syberia.sh
+build/tools/extract_utils.sh:# $3: syberia root directory
+build/tools/extract_utils.sh:        export BAKSMALIJAR="$SYBERIA_ROOT"/vendor/syberia/build/tools/smali/baksmali.jar
+build/tools/extract_utils.sh:        export SMALIJAR="$SYBERIA_ROOT"/vendor/syberia/build/tools/smali/smali.jar
+build/tools/extract_utils.sh:        export VDEXEXTRACTOR="$SYBERIA_ROOT"/vendor/syberia/build/tools/"$HOST"/vdexExtractor
+build/tools/extract_utils.sh:        export CDEXCONVERTER="$SYBERIA_ROOT"/vendor/syberia/build/tools/"$HOST"/compact_dex_converter
+build/tools/extract_utils.sh:                    python "$SYBERIA_ROOT"/vendor/syberia/build/tools/sdat2img.py "$DUMPDIR"/"$PARTITION".transfer.list "$DUMPDIR"/"$PARTITION".new.dat "$DUMPDIR"/"$PARTITION".img 2>&1
+build/tools/repopick.py:    default_gerrit = 'http://gerrit.syberiaos.com'
+build/tools/repopick.py:        name = ("syberia-project/")+project.get('name')
+build/tools/repopick.py:                cmd = ['git pull --no-edit syberia', item['fetch'][method]['ref']]
+build/tools/repopick.py:                cmd = ['git fetch syberia', item['fetch'][method]['ref']]
+build/tools/roomservice.py:custom_dependencies = "syberia.dependencies"
+config/common.mk:    vendor/shirayuki/build/tools/50-syberia.sh:$(TARGET_COPY_OUT_SYSTEM)/addon.d/50-syberia.sh \
+config/common.mk:    vendor/shirayuki/config/permissions/privapp-permissions-syberia.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-syberia.xml \
+overlay/common/packages/apps/ThemePicker/res_override/values/override.xml:    <string name="clocks_stub_package" translatable="false">com.syberia.customization</string>
+overlay/themes/Accents/AccentColorSyberiaOverlay/AndroidManifest.xml:    package="com.android.theme.color.syberia"
+overlay/themes/Accents/AccentColorSyberiaOverlay/AndroidManifest.xml:    <application android:label="@string/accent_color_syberia_overlay" android:hasCode="false"/>
+overlay/themes/Accents/AccentColorSyberiaOverlay/res/values/strings.xml:    <string name="accent_color_syberia_overlay" translatable="false">Syberia</string>
+overlay/themes/Primaries/PrimaryColorSyberia/AndroidManifest.xml:          package="com.android.theme.color.primary.syberia"
+overlay/themes/Primaries/PrimaryColorSyberia/AndroidManifest.xml:    <application android:label="@string/primary_color_syberia" android:hasCode="false"/>
+overlay/themes/Primaries/PrimaryColorSyberia/res/values/strings.xml:    <string name="primary_color_syberia" translatable="false">Syberia</string>
+packages/overlays/NoCutoutOverlay/AndroidManifest.xml:    package="com.syberia.overlay.hidecutout"
+packages/overlays/UdfpsResources/AndroidManifest.xml:    package="com.syberia.udfps.resources"
+prebuilt/Android.mk:DEFAULT_APNS_FILE := vendor/syberia/prebuilt/etc/apns-conf.xml
+prebuilt/Android.mk:CUSTOM_APNS_SCRIPT := vendor/syberia/tools/custom_apns.py
+prebuilt/Lawnchair/lawnchair.mk:LAWN_ROOT := vendor/syberia/prebuilt/Lawnchair
+prebuilt/common/etc/init/init.local.rc:    mkdir /data/syberiaos_updates 0770 system cache
+stub/AndroidManifest.xml:<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.syberia.customization">
+tools/changelog:DEVICE=$(echo $TARGET_PRODUCT | sed -e 's/syberia_//g')
+tools/custom_apns.py:    original_file = 'vendor/syberia/prebuilt/etc/apns-conf.xml'
