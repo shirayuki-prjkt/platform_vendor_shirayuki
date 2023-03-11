@@ -1,0 +1,13 @@
+# All supported devices
+# Usage: ${devices[@]}
+readonly devices=(
+  cheetah
+  panther
+  bluejay
+  raven
+  oriole
+  barbet
+  redfin
+  bramble
+  sunfish
+)
